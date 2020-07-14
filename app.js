@@ -1,4 +1,4 @@
-var scores, activePlayer, roundScore, gamePlaying;
+var scores, activePlayer, roundScore, gamePlaying, prevRoll
 init();
 
 document.querySelector(".btn-roll").addEventListener("click", rollDice);
@@ -8,6 +8,7 @@ function init() {
   roundScore = 0;
   activePlayer = 0;
   gamePlaying = true;
+  prevRoll= 0;
   // document.querySelector('#current-'+ activepPlayer).textContent = dice
   document.querySelector(".dice").style.display = "none";
   document.getElementById("score-0").textContent = 0;
@@ -26,11 +27,17 @@ function init() {
 function rollDice() {
   if (gamePlaying) {
     var dice = Math.floor(Math.random() * 6) + 1;
+    if(prevRoll==6 && dice ==6)
+    {
+      nextPlayer()
+    }
+    prevRoll = dice
+    var check = prevRoll==dice
     var diceRoll = document.querySelector(".dice");
     diceRoll.style.display = "block";
     diceRoll.src = "dice-" + dice + ".png";
 
-    if (dice !== 1) {
+    if (dice !== 1 || !check ) {
       roundScore += dice;
       document.querySelector(
         "#current-" + activePlayer
@@ -49,8 +56,14 @@ function addScore() {
 
     document.querySelector("#score-" + activePlayer).textContent =
       scores[activePlayer];
+      var input = document.querySelector('.txt-score').value
+      var winningScore =100;
+      if(input)
+      {
+        winningScore = input
+      }
 
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= winningScore) {
       gamePlaying = false;
       document.querySelector("#name-" + activePlayer).textContent = "Winner";
       document.querySelector(".dice").style.display = "none";
@@ -69,7 +82,7 @@ function addScore() {
 function nextPlayer() {
   document.querySelector("#current-" + activePlayer).textContent = 0;
   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-  roundScore = 0;
+  roundScore = 0; prevRoll=0
   document.querySelector(".player-0-panel").classList.toggle("active");
   document.querySelector(".player-1-panel").classList.toggle("active");
   diceRoll.style.display = "none";

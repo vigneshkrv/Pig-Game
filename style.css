@@ -9,6 +9,23 @@
     
 }
 
+.txt-score { 
+    text-align: center;
+    position: absolute;
+    width: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    font-family: Lato;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 10px;
+    top: 520px;
+}
+.txt-score:focus {
+    outline: none;
+}
+
 .clearfix::after {
     content: "";
     display: table;
@@ -138,6 +155,7 @@ i {
 }
 
 .btn-new { top: 45px;}
+
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
